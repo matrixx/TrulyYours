@@ -29,7 +29,7 @@ OTHER_FILES += qml/harbour-trulyyours.qml \
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/$${TARGET}-de.ts
+#TRANSLATIONS += translations/$${TARGET}-de.ts
 
 HEADERS += \
     ambiencemanager.h
