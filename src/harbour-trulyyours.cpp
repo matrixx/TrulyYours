@@ -33,6 +33,12 @@
 #endif
 
 #include <sailfishapp.h>
+#include <QSharedPointer>
+#include <QTranslator>
+#include <QLocale>
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QQmlContext>
 #include "ambiencemanager.h"
 
 int main(int argc, char *argv[])
@@ -50,6 +56,5 @@ int main(int argc, char *argv[])
 
     view->show();
     return app->exec();
-//    return SailfishApp::main(argc, argv);
 }
 
