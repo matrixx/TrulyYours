@@ -143,7 +143,6 @@ Page {
 
         onContentXChanged: {
             var curIndex = fromPixelsToIndex(contentX);
-            console.debug("got into index " + curIndex + ", previous biggest index: " + currentIndex);
             if (curIndex <= currentIndex)
             {
                 return;
@@ -191,8 +190,11 @@ Page {
                         console.debug(fullUrl);
                         results[i].fullUri = fullUrl;
                         results[i].active = false;
-                        ambiences.append(results[i]);
                     }
+                }
+                for (var j = results.length - 1; j > -1; j--)
+                {
+                    ambiences.append(results[j]);
                 }
             }
         }
