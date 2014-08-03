@@ -30,13 +30,12 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "../../Data.js" as Data;
 
 Page {
     id: page
-    property var ambiences: ListModel {}
     Component.onCompleted: {
-        browse();
+        Data.getAmbiences(ambienceView.ambiences);
     }
 
     SilicaFlickable {
@@ -51,8 +50,8 @@ Page {
         /*
         PullDownMenu {
             MenuItem {
-                text: qsTr("Dummy Item")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                text: qsTr("Browse Tags")
+                onClicked: pageStack.push(Qt.resolvedUrl("TagCloudPage.qml"))
             }
         }
         */
@@ -70,7 +69,7 @@ Page {
 
         Row {
             id: ambienceView
-
+            property var ambiences: ListModel {}
             height: parent.height - header.height - Theme.paddingLarge
             anchors.top: header.bottom
             anchors.topMargin: Theme.paddingLarge
@@ -78,15 +77,16 @@ Page {
             spacing: Theme.paddingMedium
 
             Repeater {
-                model: ambiences
+                model: ambienceView.ambiences
                 delegate: Item {
                     id: ambienceItem
                     property bool loading: true
-                    property bool active: ambiences.get(index).active
+                    property bool active: ambienceView.ambiences.get(index).activated
+                    property string fileName: ambienceView.ambiences.get(index).fileName
                     Component.onCompleted: {
                         if (index >= 0 && index < flickable.preloadAmount)
                         {
-                            active = true;
+                            ambienceView.ambiences.get(index).activated = true;
                         }
                     }
 
@@ -94,22 +94,21 @@ Page {
                     {
                         if (active)
                         {
-                            console.debug(index + " becomes active");
-                            if (ambienceMgr.hasThumbnail(getFileName(index)))
+                            if (ambienceMgr.hasThumbnail(fileName))
                             {
-                                previewImage.source = ambienceMgr.thumbnail(getFileName(index));
+                                previewImage.source = ambienceMgr.thumbnail(fileName);
                             }
                             else
                             {
                                 ambienceMgr.saveThumbnailSucceeded.connect(thumbnailReceived);
-                                ambienceMgr.saveThumbnail(ambiences.get(index).fullUri, getFileName(index));
+                                ambienceMgr.saveThumbnail(ambienceView.ambiences.get(index).fullUri, fileName);
                             }
                         }
                     }
 
                     function thumbnailReceived(name)
                     {
-                        if (getFileName(index) === name)
+                        if (fileName === name)
                         {
                             console.debug("got successfully thumbnail for: " + name);
                             ambienceMgr.saveThumbnailSucceeded.disconnect(thumbnailReceived);
@@ -134,7 +133,7 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push("AmbienceDetailPage.qml", { "url" : ambiences.get(index).fullUri, "name" : getFileName(index) })
+                            pageStack.push("AmbienceDetailPage.qml", { "url" : ambienceView.ambiences.get(index).fullUri, "name" : fileName })
                         }
                     }
                 }
@@ -149,13 +148,13 @@ Page {
             }
             currentIndex = curIndex;
             var nextToActivate = curIndex + loadMoreThreshold;
-            if (ambiences.length <= nextToActivate)
+            if (ambienceView.ambiences.length <= nextToActivate)
             {
-                nextToActivate = ambiences.length - 1;
+                nextToActivate = ambienceView.ambiences.length - 1;
             }
             for (var i = lastActivated + 1; i <= nextToActivate; i++)
             {
-                ambiences.get(i).active = true;
+                ambienceView.ambiences.get(i).activated = true;
             }
             lastActivated = nextToActivate;
         }
@@ -164,55 +163,6 @@ Page {
         {
             return Math.floor(pixels / (250 + Theme.paddingMedium));
         }
-    }
-
-    function browse()
-    {
-        var xhr = new XMLHttpRequest
-        var query = "http://www.jollawalls.com/api/media"
-        xhr.open("GET", query);
-        xhr.onreadystatechange = function()
-        {
-            console.debug("state changed")
-            if (xhr.readyState === XMLHttpRequest.DONE)
-            {
-                console.debug("parsing results")
-                console.debug(xhr.responseText)
-
-                var results = JSON.parse(xhr.responseText)
-                console.debug("finished parsing")
-                for (var i in results)
-                {
-                    if (results[i].pic_url)
-                    {
-                        var reduced = results[i].pic_url.replace(/\\/gi,'');
-                        var fullUrl = "http://www.jollawalls.com/content/uploads/images/" + reduced;
-                        console.debug(fullUrl);
-                        results[i].fullUri = fullUrl;
-                        results[i].active = false;
-                    }
-                }
-                for (var j = results.length - 1; j > -1; j--)
-                {
-                    ambiences.append(results[j]);
-                }
-            }
-        }
-        xhr.send();
-    }
-
-    function getFileName(index)
-    {
-        var baseName = ambiences.get(index).slug;
-        if (ambiences.get(index).pic_url.indexOf(".jpg") > -1)
-        {
-            baseName += ".jpg";
-        }
-        else
-        {
-            baseName += ".png";
-        }
-        return baseName;
     }
 }
 

@@ -24,12 +24,16 @@ OTHER_FILES += qml/harbour-trulyyours.qml \
     translations/*.ts \
     $${TARGET}.desktop \
     qml/pages/AmbienceDetailPage.qml \
-    qml/pages/BrowseAmbienceListPage.qml
+    qml/pages/BrowseAmbienceListPage.qml \
+    Data.js
 
+js.path = /usr/share/$${TARGET}/
+js.files = Data.js
 # to disable building translations every time, comment out the
 # following CONFIG line
-CONFIG += sailfishapp_i18n
+#CONFIG += sailfishapp_i18n
 #TRANSLATIONS += translations/$${TARGET}-de.ts
+INSTALLS += js
 
 HEADERS += \
     ambiencemanager.h
