@@ -6,7 +6,11 @@
 #include <QDir>
 
 AmbienceManager::AmbienceManager(QObject *parent) :
-    QObject(parent), mThumbnailReply(0), mFullImageReply(0)
+    QObject(parent),
+    mThumbnailReply(0),
+    mFullImageReply(0),
+    mThumbnail(0),
+    mFullImage(0)
 {
     mPictureLocation = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     mCacheLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -14,6 +18,43 @@ AmbienceManager::AmbienceManager(QObject *parent) :
     if (!root.mkpath(mCacheLocation))
     {
         qDebug() << "failed to create cachedir";
+    }
+}
+
+AmbienceManager::~AmbienceManager()
+{
+    if (mThumbnail)
+    {
+        mThumbnail->close();
+
+        // if client was shut down during thumbnail download
+        if (mThumbnail->size() == 0)
+        {
+            // remove empty file
+            mThumbnail->remove();
+        }
+        delete mThumbnail;
+        mThumbnail = 0;
+    }
+
+    if (mFullImage)
+    {
+        mFullImage->close();
+
+        // if client was shut down during full image download
+        if (mFullImage->size() == 0)
+        {
+            // remove empty file
+            mFullImage->remove();
+        }
+        delete mFullImage;
+        mFullImage = 0;
+    }
+
+    // delete cached full size images
+    foreach (QString fileName, mSavedFullImages)
+    {
+        QFile::remove(fileName);
     }
 }
 
@@ -30,9 +71,10 @@ bool AmbienceManager::hasThumbnail(QString name)
 
 void AmbienceManager::saveImageToGallery(QString name)
 {
-    if (QFile::exists(mCacheLocation + "/" + "ambience-" + name))
+    if (QFile::exists(mCacheLocation + "/ambience-" + name))
     {
-        QFile::copy(mCacheLocation + "/" + "ambience-" + name, mPictureLocation + "/" + "ambience-" + name);
+        QFile::copy(mCacheLocation + "/ambience-" + name, mPictureLocation + "/ambience-" + name);
+        mSavedFullImages.append(mCacheLocation + "/ambience-" + name);
         emit saveImageToGallerySucceeded();
     }
     else
@@ -69,7 +111,7 @@ void AmbienceManager::onSaveThumbnailFinished()
 {
     disconnect(mThumbnailReply, &QNetworkReply::finished,
             this, &AmbienceManager::onSaveThumbnailFinished);
-    if (!mThumbnailReply->error())
+    if (!mThumbnailReply->error()) // TODO: handle error case
     {
         qDebug() << "no error, saving file";
         QImage* fullSizeImage = new QImage;
@@ -110,12 +152,14 @@ void AmbienceManager::onSaveFullImageFinished()
 {
     disconnect(mFullImageReply, &QNetworkReply::finished,
             this, &AmbienceManager::onSaveFullImageFinished);
-    if (!mFullImageReply->error())
+    if (!mFullImageReply->error()) // TODO: handle error case
     {
         qDebug() << "no error, saving file";
         mFullImage->write(mFullImageReply->readAll());
         mFullImage->close();
         emit saveFullImageSucceeded(mFullImage->fileName());
+        delete mFullImage;
+        mFullImage = 0;
     }
     mFullImageReply->deleteLater();
     mFullImageReply = 0;

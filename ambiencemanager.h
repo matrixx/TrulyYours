@@ -7,12 +7,14 @@
 #include <QNetworkReply>
 #include <QFile>
 #include <QQueue>
+#include <QStringList>
 
 class AmbienceManager : public QObject
 {
     Q_OBJECT
 public:
     explicit AmbienceManager(QObject *parent = 0);
+    virtual ~AmbienceManager();
     Q_INVOKABLE QString thumbnail(QString name);
     Q_INVOKABLE bool hasThumbnail(QString name);
     Q_INVOKABLE void saveImageToGallery(QString name);
@@ -40,6 +42,7 @@ private: // data
     QString mPictureLocation;
     QString mCacheLocation;
     QQueue<QPair<QUrl, QString> > mThumbnailQueue;
+    QStringList mSavedFullImages;
 };
 
 #endif // AMBIENCEMANAGER_H

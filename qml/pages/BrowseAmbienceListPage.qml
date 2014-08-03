@@ -41,6 +41,10 @@ Page {
 
     SilicaFlickable {
         id: flickable
+        property int lastActivated: -1
+        property int currentIndex: -1;
+        property int preloadAmount: 10
+        property int loadMoreThreshold: 10
         anchors.fill: parent
         contentWidth: ambienceView.width
         contentHeight: parent.height
@@ -54,6 +58,7 @@ Page {
         */
 
         ScrollDecorator { flickable: flickable }
+
         PageHeader {
             id: header
             title: qsTr("All ambiences")
@@ -77,15 +82,28 @@ Page {
                 delegate: Item {
                     id: ambienceItem
                     property bool loading: true
+                    property bool active: ambiences.get(index).active
                     Component.onCompleted: {
-                        if (ambienceMgr.hasThumbnail(getFileName(index)))
+                        if (index >= 0 && index < flickable.preloadAmount)
                         {
-                            previewImage.source = ambienceMgr.thumbnail(getFileName(index));
+                            active = true;
                         }
-                        else
+                    }
+
+                    onActiveChanged:
+                    {
+                        if (active)
                         {
-                            ambienceMgr.saveThumbnailSucceeded.connect(thumbnailReceived);
-                            ambienceMgr.saveThumbnail(ambiences.get(index).fullUri, getFileName(index));
+                            console.debug(index + " becomes active");
+                            if (ambienceMgr.hasThumbnail(getFileName(index)))
+                            {
+                                previewImage.source = ambienceMgr.thumbnail(getFileName(index));
+                            }
+                            else
+                            {
+                                ambienceMgr.saveThumbnailSucceeded.connect(thumbnailReceived);
+                                ambienceMgr.saveThumbnail(ambiences.get(index).fullUri, getFileName(index));
+                            }
                         }
                     }
 
@@ -122,6 +140,31 @@ Page {
                 }
             }
         }
+
+        onContentXChanged: {
+            var curIndex = fromPixelsToIndex(contentX);
+            console.debug("got into index " + curIndex + ", previous biggest index: " + currentIndex);
+            if (curIndex <= currentIndex)
+            {
+                return;
+            }
+            currentIndex = curIndex;
+            var nextToActivate = curIndex + loadMoreThreshold;
+            if (ambiences.length <= nextToActivate)
+            {
+                nextToActivate = ambiences.length - 1;
+            }
+            for (var i = lastActivated + 1; i <= nextToActivate; i++)
+            {
+                ambiences.get(i).active = true;
+            }
+            lastActivated = nextToActivate;
+        }
+
+        function fromPixelsToIndex(pixels)
+        {
+            return Math.floor(pixels / (250 + Theme.paddingMedium));
+        }
     }
 
     function browse()
@@ -147,6 +190,7 @@ Page {
                         var fullUrl = "http://www.jollawalls.com/content/uploads/images/" + reduced;
                         console.debug(fullUrl);
                         results[i].fullUri = fullUrl;
+                        results[i].active = false;
                         ambiences.append(results[i]);
                     }
                 }
