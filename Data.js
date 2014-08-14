@@ -3,8 +3,10 @@
 var ambiences = []
 var tags = []
 var tagCounts = []
+var maxTagsCount = 1;
+var filteredCnt = 0;
 
-function getAmbiences(model)
+function fetchAmbiences(tagMgr)
 {
     var xhr = new XMLHttpRequest
     var query = "http://www.jollawalls.com/api/media"
@@ -30,10 +32,30 @@ function getAmbiences(model)
             {
                 ambiences.push(results[j]);
             }
-            model.append(ambiences);
+            tagMgr.sortAndSaveTags(tags, tagCounts);
         }
     }
     xhr.send();
+}
+
+function fillModel(model, filter)
+{
+    model.clear();
+    filteredCnt = 0;
+    for (var i in ambiences)
+    {
+        if (hasTag(filter, ambiences[i].tags) || (filter === ""))
+        {
+            model.append(ambiences[i]);
+            filteredCnt++;
+        }
+    }
+    console.debug("set ambience count: " + filteredCnt);
+}
+
+function filteredCount()
+{
+    return filteredCnt;
 }
 
 function getFileName(baseName, picUrl)
@@ -41,6 +63,10 @@ function getFileName(baseName, picUrl)
     if (picUrl.indexOf(".jpg") > -1)
     {
         baseName += ".jpg";
+    }
+    else if (picUrl.indexOf(".jpeg") > -1)
+    {
+        baseName += ".jpeg";
     }
     else
     {
@@ -54,10 +80,19 @@ function saveTags(tagString)
     var tagList = tagString.split(",");
     for (var i in tagList)
     {
+        if (tagList[i] === "")
+        {
+            break;
+        }
+
         var index = tags.indexOf(tagList[i]);
         if (index > -1)
         {
             tagCounts[index] += 1;
+            if (tagCounts[index] > maxTagsCount)
+            {
+                maxTagsCount = tagCounts[index];
+            }
         }
         else
         {
@@ -65,4 +100,22 @@ function saveTags(tagString)
             tagCounts.push(1);
         }
     }
+}
+
+function hasTag(tag, tagString)
+{
+    var tagList = tagString.split(",");
+    for (var i in tagList)
+    {
+        if (tagList[i].toLowerCase() === tag)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getTagMaxCount()
+{
+    return maxTagsCount;
 }

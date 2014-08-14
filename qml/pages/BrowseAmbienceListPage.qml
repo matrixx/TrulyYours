@@ -34,8 +34,9 @@ import "../../Data.js" as Data;
 
 Page {
     id: page
+    property string filter: ""
     Component.onCompleted: {
-        Data.getAmbiences(ambienceView.ambiences);
+        Data.fillModel(ambienceView.ambiences, filter);
     }
 
     SilicaFlickable {
@@ -47,6 +48,7 @@ Page {
         anchors.fill: parent
         contentWidth: ambienceView.width
         contentHeight: parent.height
+
         /*
         PullDownMenu {
             MenuItem {
@@ -60,7 +62,7 @@ Page {
 
         PageHeader {
             id: header
-            title: qsTr("All ambiences")
+            title: qsTr("Found ambiences")
             height: 80
             width: page.width
             anchors.left: parent.left
@@ -70,6 +72,7 @@ Page {
         Row {
             id: ambienceView
             property var ambiences: ListModel {}
+            property int ambienceCount: Data.filteredCount();
             height: parent.height - header.height - Theme.paddingLarge
             anchors.top: header.bottom
             anchors.topMargin: Theme.paddingLarge
@@ -83,6 +86,7 @@ Page {
                     property bool loading: true
                     property bool active: ambienceView.ambiences.get(index).activated
                     property string fileName: ambienceView.ambiences.get(index).fileName
+
                     Component.onCompleted: {
                         if (index >= 0 && index < flickable.preloadAmount)
                         {
@@ -94,8 +98,10 @@ Page {
                     {
                         if (active)
                         {
+                            console.debug("activated: " + fileName);
                             if (ambienceMgr.hasThumbnail(fileName))
                             {
+                                console.debug("has already thumbnail");
                                 previewImage.source = ambienceMgr.thumbnail(fileName);
                             }
                             else
@@ -148,12 +154,15 @@ Page {
             }
             currentIndex = curIndex;
             var nextToActivate = curIndex + loadMoreThreshold;
-            if (ambienceView.ambiences.length <= nextToActivate)
+            console.debug("next to activate: " + nextToActivate)
+            console.debug("amb count: " + Data.filteredCount())
+            if (Data.filteredCount() <= nextToActivate)
             {
-                nextToActivate = ambienceView.ambiences.length - 1;
+                nextToActivate = Data.filteredCount() - 1;
             }
             for (var i = lastActivated + 1; i <= nextToActivate; i++)
             {
+                console.debug("activating: " + i);
                 ambienceView.ambiences.get(i).activated = true;
             }
             lastActivated = nextToActivate;

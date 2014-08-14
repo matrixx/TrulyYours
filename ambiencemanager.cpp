@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QFileInfo>
 #include <QDir>
+#include <QVariant>
 
 AmbienceManager::AmbienceManager(QObject *parent) :
     QObject(parent),
@@ -113,7 +114,6 @@ void AmbienceManager::onSaveThumbnailFinished()
             this, &AmbienceManager::onSaveThumbnailFinished);
     if (!mThumbnailReply->error()) // TODO: handle error case
     {
-        qDebug() << "no error, saving file";
         QImage* fullSizeImage = new QImage;
         fullSizeImage->loadFromData(mThumbnailReply->readAll());
         QImage thumbnailImage(fullSizeImage->scaled(QSize(250, 740)));

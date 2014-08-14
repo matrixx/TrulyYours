@@ -40,6 +40,7 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include "ambiencemanager.h"
+#include "tagmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,10 +50,13 @@ int main(int argc, char *argv[])
     translator.load("translations_" + QLocale::system().name(),
                     "/usr/share/harbour-trulyyours/i18n");
     app->installTranslator(&translator);
-    view->setSource(QUrl(SailfishApp::pathTo("qml/harbour-trulyyours.qml")));
+
 
     AmbienceManager mgr;
+    TagManager tagMgr;
     view->rootContext()->setContextProperty("ambienceMgr", &mgr);
+    view->rootContext()->setContextProperty("tagMgr", &tagMgr);
+    view->setSource(QUrl(SailfishApp::pathTo("qml/harbour-trulyyours.qml")));
 
     view->show();
     return app->exec();

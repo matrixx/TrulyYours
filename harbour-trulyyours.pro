@@ -15,7 +15,8 @@ TARGET = harbour-trulyyours
 CONFIG += sailfishapp
 
 SOURCES += src/harbour-trulyyours.cpp \
-    ambiencemanager.cpp
+    ambiencemanager.cpp \
+    tagmanager.cpp
 
 OTHER_FILES += qml/harbour-trulyyours.qml \
     qml/cover/CoverPage.qml \
@@ -25,7 +26,9 @@ OTHER_FILES += qml/harbour-trulyyours.qml \
     $${TARGET}.desktop \
     qml/pages/AmbienceDetailPage.qml \
     qml/pages/BrowseAmbienceListPage.qml \
-    Data.js
+    Data.js \
+    qml/pages/MainPage.qml \
+    qml/pages/Components/QuickTagCloud.qml
 
 js.path = /usr/share/$${TARGET}/
 js.files = Data.js
@@ -36,5 +39,6 @@ js.files = Data.js
 INSTALLS += js
 
 HEADERS += \
-    ambiencemanager.h
+    ambiencemanager.h \
+    tagmanager.h
 
