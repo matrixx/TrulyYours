@@ -4,7 +4,6 @@
 #include <QImage>
 #include <QFileInfo>
 #include <QDir>
-#include <QUrl>
 #include <QVariant>
 
 static const char *AMBIENCED_SERVICE = "com.jolla.ambienced";
@@ -66,12 +65,12 @@ AmbienceManager::~AmbienceManager()
     }
 }
 
-QString AmbienceManager::thumbnail(QString name)
+QString AmbienceManager::thumbnail(const QString &name)
 {
     return mCacheLocation + "/" + name;
 }
 
-bool AmbienceManager::hasThumbnail(QString name)
+bool AmbienceManager::hasThumbnail(const QString &name)
 {
     QString filePath = mCacheLocation + "/" + name;
     return (QFile::exists(filePath));
@@ -82,7 +81,7 @@ static inline QString createAmbienceImage(const QString &pictureLocation, const 
     return pictureLocation + "/ambience-" + name;
 }
 
-bool AmbienceManager::saveImageToGallery(QString name)
+bool AmbienceManager::saveImageToGallery(const QString &name)
 {
     if (!QFile::exists(mCacheLocation + "/ambience-" + name))
     {
@@ -108,7 +107,7 @@ bool AmbienceManager::saveImageToGalleryAndApplyAmbience(const QString &name)
     return true;
 }
 
-void AmbienceManager::saveThumbnail(QUrl fileUrl, QString name)
+void AmbienceManager::saveThumbnail(const QUrl &fileUrl, const QString &name)
 {
     mThumbnailQueue.enqueue(qMakePair(fileUrl, name));
     if (!mThumbnailReply) // if no ongoing thumbnail download
@@ -159,7 +158,7 @@ void AmbienceManager::onSaveThumbnailFinished()
     }
 }
 
-void AmbienceManager::saveFullImage(QUrl fileUrl, QString name)
+void AmbienceManager::saveFullImage(const QUrl &fileUrl, const QString &name)
 {
     QNetworkRequest request;
     request.setUrl(QUrl(fileUrl));

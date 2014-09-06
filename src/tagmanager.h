@@ -11,7 +11,7 @@ class TagManager : public QObject
 
 public:
     explicit TagManager(QObject *parent = 0);
-    Q_INVOKABLE void sortAndSaveTags(QVariantList names, QVariantList counts);
+    Q_INVOKABLE void sortAndSaveTags(const QVariantList &names, const QVariantList &counts);
     Q_INVOKABLE QVariantList getTags();
     Q_INVOKABLE QVariantList getTagAmounts();
 
