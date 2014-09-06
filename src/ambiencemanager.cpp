@@ -4,14 +4,19 @@
 #include <QImage>
 #include <QFileInfo>
 #include <QDir>
+#include <QUrl>
 #include <QVariant>
+
+static const char *AMBIENCED_SERVICE = "com.jolla.ambienced";
+static const char *AMBIENCED_PATH = "/com/jolla/ambienced";
 
 AmbienceManager::AmbienceManager(QObject *parent) :
     QObject(parent),
     mThumbnailReply(0),
     mFullImageReply(0),
     mThumbnail(0),
-    mFullImage(0)
+    mFullImage(0),
+    mInterface(0)
 {
     mPictureLocation = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     mCacheLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
@@ -20,6 +25,8 @@ AmbienceManager::AmbienceManager(QObject *parent) :
     {
         qDebug() << "failed to create cachedir";
     }
+
+    mInterface = new ComJollaAmbiencedInterface(AMBIENCED_SERVICE, AMBIENCED_PATH, QDBusConnection::sessionBus(), this);
 }
 
 AmbienceManager::~AmbienceManager()
@@ -70,18 +77,35 @@ bool AmbienceManager::hasThumbnail(QString name)
     return (QFile::exists(filePath));
 }
 
-void AmbienceManager::saveImageToGallery(QString name)
+static inline QString createAmbienceImage(const QString &pictureLocation, const QString &name)
 {
-    if (QFile::exists(mCacheLocation + "/ambience-" + name))
-    {
-        QFile::copy(mCacheLocation + "/ambience-" + name, mPictureLocation + "/ambience-" + name);
-        mSavedFullImages.append(mCacheLocation + "/ambience-" + name);
-        emit saveImageToGallerySucceeded();
-    }
-    else
+    return pictureLocation + "/ambience-" + name;
+}
+
+bool AmbienceManager::saveImageToGallery(QString name)
+{
+    if (!QFile::exists(mCacheLocation + "/ambience-" + name))
     {
         qDebug() << name << "does not exist, cannot copy to gallery";
+        return false;
     }
+
+    QFile::copy(mCacheLocation + "/ambience-" + name, createAmbienceImage(mPictureLocation, name));
+    mSavedFullImages.append(mCacheLocation + "/ambience-" + name);
+    emit saveImageToGallerySucceeded();
+    return true;
+}
+
+bool AmbienceManager::saveImageToGalleryAndApplyAmbience(const QString &name)
+{
+    if (!saveImageToGallery(name)) {
+        return false;
+    }
+
+    QString url = QUrl::fromLocalFile(createAmbienceImage(mPictureLocation, name)).toString();
+    mInterface->createAmbience(url);
+    mInterface->setAmbience(url);
+    return true;
 }
 
 void AmbienceManager::saveThumbnail(QUrl fileUrl, QString name)

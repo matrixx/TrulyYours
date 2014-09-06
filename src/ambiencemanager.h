@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QQueue>
 #include <QStringList>
+#include "ambienced.h"
 
 class AmbienceManager : public QObject
 {
@@ -17,7 +18,8 @@ public:
     virtual ~AmbienceManager();
     Q_INVOKABLE QString thumbnail(QString name);
     Q_INVOKABLE bool hasThumbnail(QString name);
-    Q_INVOKABLE void saveImageToGallery(QString name);
+    Q_INVOKABLE bool saveImageToGallery(QString name);
+    Q_INVOKABLE bool saveImageToGalleryAndApplyAmbience(const QString &name);
 
 signals:
     void saveImageToGallerySucceeded();
@@ -43,6 +45,7 @@ private: // data
     QString mCacheLocation;
     QQueue<QPair<QUrl, QString> > mThumbnailQueue;
     QStringList mSavedFullImages;
+    ComJollaAmbiencedInterface *mInterface;
 };
 
 #endif // AMBIENCEMANAGER_H

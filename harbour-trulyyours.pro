@@ -2,13 +2,19 @@ TEMPLATE = app
 TARGET = harbour-trulyyours
 CONFIG += sailfishapp
 
+QT += dbus
+
+system(qdbusxml2cpp -p src/ambienced.h:src/ambienced.cpp src/ambienced.xml)
+
 HEADERS += \
     src/ambiencemanager.h \
-    src/tagmanager.h
+    src/tagmanager.h \
+    src/ambienced.h
 
 SOURCES += src/harbour-trulyyours.cpp \
     src/ambiencemanager.cpp \
-    src/tagmanager.cpp
+    src/tagmanager.cpp \
+    src/ambienced.cpp
 
 OTHER_FILES += rpm/$${TARGET}.spec \
     rpm/$${TARGET}.yaml \

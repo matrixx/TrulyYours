@@ -51,6 +51,15 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("Save and create ambience")
+                visible: fullImage.source != "" && !savingInProgress
+                onClicked: {
+                    savingInProgress = true;
+                    ambienceMgr.saveImageToGalleryAndApplyAmbience(name)
+                }
+            }
+
+            MenuItem {
                 text: qsTr("Save to gallery")
                 visible: fullImage.source != "" && !savingInProgress
                 onClicked: {
