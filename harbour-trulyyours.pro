@@ -1,44 +1,33 @@
-# NOTICE:
-#
-# Application name defined in TARGET has a corresponding QML filename.
-# If name defined in TARGET is changed, the following needs to be done
-# to match new name:
-#   - corresponding QML filename must be changed
-#   - desktop icon filename must be changed
-#   - desktop filename must be changed
-#   - icon definition filename in desktop file must be changed
-#   - translation filenames have to be changed
-
-# The name of your application
+TEMPLATE = app
 TARGET = harbour-trulyyours
-
 CONFIG += sailfishapp
 
-SOURCES += src/harbour-trulyyours.cpp \
-    ambiencemanager.cpp \
-    tagmanager.cpp
+HEADERS += \
+    src/ambiencemanager.h \
+    src/tagmanager.h
 
-OTHER_FILES += qml/harbour-trulyyours.qml \
-    qml/cover/CoverPage.qml \
-    rpm/$${TARGET}.spec \
+SOURCES += src/harbour-trulyyours.cpp \
+    src/ambiencemanager.cpp \
+    src/tagmanager.cpp
+
+OTHER_FILES += rpm/$${TARGET}.spec \
     rpm/$${TARGET}.yaml \
-    translations/*.ts \
     $${TARGET}.desktop \
+    translations/*.ts \
+    qml/harbour-trulyyours.qml \
+    qml/cover/CoverPage.qml \
     qml/pages/AmbienceDetailPage.qml \
     qml/pages/BrowseAmbienceListPage.qml \
-    Data.js \
+    qml/pages/Data.js \
     qml/pages/MainPage.qml \
     qml/pages/Components/QuickTagCloud.qml
 
-js.path = /usr/share/$${TARGET}/
+js.path = /usr/share/$${TARGET}/qml/pages
 js.files = Data.js
+INSTALLS += js
+
 # to disable building translations every time, comment out the
 # following CONFIG line
 #CONFIG += sailfishapp_i18n
 #TRANSLATIONS += translations/$${TARGET}-de.ts
-INSTALLS += js
-
-HEADERS += \
-    ambiencemanager.h \
-    tagmanager.h
 
