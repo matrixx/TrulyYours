@@ -40,20 +40,20 @@ class AmbienceManager : public QObject
 public:
     explicit AmbienceManager(QObject *parent = 0);
     virtual ~AmbienceManager();
-    Q_INVOKABLE QString thumbnail(QString name);
-    Q_INVOKABLE bool hasThumbnail(QString name);
-    Q_INVOKABLE bool saveImageToGallery(QString name);
+    Q_INVOKABLE QString thumbnail(const QString &name);
+    Q_INVOKABLE bool hasThumbnail(const QString &name);
+    Q_INVOKABLE bool saveImageToGallery(const QString &name);
     Q_INVOKABLE bool saveImageToGalleryAndApplyAmbience(const QString &name);
 
 signals:
     void saveImageToGallerySucceeded();
-    void saveThumbnailSucceeded(QString);
-    void saveFullImageSucceeded(QString);
+    void saveThumbnailSucceeded(const QString &name);
+    void saveFullImageSucceeded(const QString &name);
 
 public slots:
-    Q_INVOKABLE void saveThumbnail(QUrl fileUrl, QString name);
+    void saveThumbnail(const QUrl &fileUrl, const QString &name);
     void onSaveThumbnailFinished();
-    Q_INVOKABLE void saveFullImage(QUrl fileUrl, QString name);
+    void saveFullImage(const QUrl &fileUrl, const QString &name);
     void onSaveFullImageFinished();
 
 private: // methods

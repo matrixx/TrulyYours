@@ -31,7 +31,7 @@ TagManager::TagManager(QObject *parent) :
 {
 }
 
-void TagManager::sortAndSaveTags(QVariantList names, QVariantList counts)
+void TagManager::sortAndSaveTags(const QVariantList &names, const QVariantList &counts)
 {
     for (int i = 0; i < names.size(); ++i)
     {
