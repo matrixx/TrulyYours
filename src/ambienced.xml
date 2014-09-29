@@ -1,0 +1,60 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="com.jolla.ambienced">
+    <method name="indexFile">
+      <arg direction="in" type="s" name="url"/>
+    </method>
+    <method name="createAmbience">
+      <arg direction="in" type="s" name="url"/>
+    </method>
+    <method name="setAmbience">
+      <arg direction="in" type="s" name="url"/>
+    </method>
+    <method name="remove">
+      <arg direction="in" type="i" name="contentType"/>
+      <arg direction="in" type="x" name="contentId"/>
+    </method>
+    <method name="installPackage">
+      <arg direction="in" type="s" name="path"/>
+    </method>
+    <method name="saveAttributes">
+      <arg direction="in" type="i" name="contentType"/>
+      <arg direction="in" type="x" name="contentId"/>
+      <arg direction="in" type="a{sv}" name="args"/>
+      <annotation value="QVariantMap" name="org.qtproject.QtDBus.QtTypeName.In2"/>
+    </method>
+    <method name="refreshAmbiences"/>
+    <signal name="contentChanged">
+      <arg direction="out" type="i" name="type"/>
+    </signal>
+  </interface>
+  <interface name="org.freedesktop.DBus.Properties">
+    <method name="Get">
+      <arg name="interface_name" type="s" direction="in"/>
+      <arg name="property_name" type="s" direction="in"/>
+      <arg name="value" type="v" direction="out"/>
+    </method>
+    <method name="Set">
+      <arg name="interface_name" type="s" direction="in"/>
+      <arg name="property_name" type="s" direction="in"/>
+      <arg name="value" type="v" direction="in"/>
+    </method>
+    <method name="GetAll">
+      <arg name="interface_name" type="s" direction="in"/>
+      <arg name="values" type="a{sv}" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+    </method>
+  </interface>
+  <interface name="org.freedesktop.DBus.Introspectable">
+    <method name="Introspect">
+      <arg name="xml_data" type="s" direction="out"/>
+    </method>
+  </interface>
+  <interface name="org.freedesktop.DBus.Peer">
+    <method name="Ping"/>
+    <method name="GetMachineId">
+      <arg name="machine_uuid" type="s" direction="out"/>
+    </method>
+  </interface>
+</node>
