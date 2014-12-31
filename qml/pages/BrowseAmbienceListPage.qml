@@ -33,15 +33,29 @@ Page {
         Data.fillModel(ambienceView.ambiences, filter);
     }
 
+    PageHeader {
+        id: header
+        title: page.filter == "" ? qsTr("Found ambiences") : qsTr("Ambiences for '%1'").arg(filter)
+        height: 80
+        width: page.width
+        anchors.left: parent.left
+        anchors.top: parent.top
+    }
+
     SilicaFlickable {
         id: flickable
         property int lastActivated: -1
         property int currentIndex: -1;
         property int preloadAmount: 10
         property int loadMoreThreshold: 10
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
+        anchors.topMargin: Theme.paddingLarge
+
         contentWidth: ambienceView.width
-        contentHeight: parent.height
+        contentHeight: parent.height - header.height - Theme.paddingLarge
 
         /*
         PullDownMenu {
@@ -54,22 +68,12 @@ Page {
 
         ScrollDecorator { flickable: flickable }
 
-        PageHeader {
-            id: header
-            title: qsTr("Found ambiences")
-            height: 80
-            width: page.width
-            anchors.left: parent.left
-            anchors.top: parent.top
-        }
-
         Row {
             id: ambienceView
             property var ambiences: ListModel {}
             property int ambienceCount: Data.filteredCount();
-            height: parent.height - header.height - Theme.paddingLarge
+            height: parent.height - Theme.paddingLarge
             anchors.top: header.bottom
-            anchors.topMargin: Theme.paddingLarge
             anchors.left: parent.left
             spacing: Theme.paddingMedium
 
