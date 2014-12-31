@@ -17,20 +17,25 @@
 <context>
     <name>BrowseAmbienceListPage</name>
     <message>
-        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="59"/>
+        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="38"/>
         <source>Found ambiences</source>
         <translation>Found ambiences</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="38"/>
+        <source>Ambiences for &apos;%1&apos;</source>
+        <translation>Ambiences for &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="53"/>
+        <location filename="../qml/pages/MainPage.qml" line="45"/>
         <source>Show all ambiences</source>
         <translation>Show all ambiences</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="62"/>
+        <location filename="../qml/pages/MainPage.qml" line="54"/>
         <source>Tags</source>
         <translation>Tags</translation>
     </message>

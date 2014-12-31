@@ -18,6 +18,10 @@
         <source>Found ambiences</source>
         <translation>Ambiente</translation>
     </message>
+    <message>
+        <source>Ambiences for &apos;%1&apos;</source>
+        <translation>&apos;%1&apos;-Ambiente</translation>
+    </message>
 </context>
 <context>
     <name>MainPage</name>
