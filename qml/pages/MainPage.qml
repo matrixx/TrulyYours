@@ -66,6 +66,10 @@ Page {
             anchors.top: header.bottom
             anchors.topMargin: Theme.paddingLarge
         }
+        ViewPlaceholder {
+            enabled: tagCloud.maxTagCount == 0
+            text: qsTr("Loading")
+        }
 
         function setTags()
         {
