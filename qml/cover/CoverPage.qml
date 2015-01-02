@@ -58,7 +58,7 @@ CoverBackground {
 
     CoverActionList {
         id: coverAction
-        enabled: rootWindow.ambiences.count > 0 && rootWindow.ambiences.index < rootWindow.ambiences.count
+        enabled: rootWindow.ambiences.count > 0 && rootWindow.ambiences.index < rootWindow.ambiences.count - 1
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
