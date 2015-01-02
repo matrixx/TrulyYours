@@ -32,6 +32,20 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    Column {
+        visible: previewImage.source == ""
+        anchors.centerIn: parent
+        Image {
+            source: Qt.resolvedUrl("/usr/share/icons/hicolor/86x86/apps/"
+                                   + "harbour-trulyyours.png")
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Truly Yours"
+        }
+    }
+
     Image {
         id: previewImage
         anchors.centerIn: parent
