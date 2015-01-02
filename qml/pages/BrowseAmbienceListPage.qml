@@ -30,7 +30,8 @@ Page {
     id: page
     property string filter: ""
     Component.onCompleted: {
-        Data.fillModel(ambienceView.ambiences, filter);
+        rootWindow.ambiences.index = -1;
+        Data.fillModel(rootWindow.ambiences, filter);
     }
 
     PageHeader {
@@ -57,6 +58,21 @@ Page {
         contentWidth: ambienceView.width
         contentHeight: parent.height - header.height - Theme.paddingLarge
 
+        Connections {
+            target: rootWindow.ambiences
+            onIndexChanged: {
+                var index = rootWindow.ambiences.index
+                if (index > flickable.currentIndex)
+                {
+                    var pixels = Math.floor(index * (250 + Theme.paddingMedium))
+                    if (pixels < flickable.contentWidth)
+                    {
+                        flickable.contentX = pixels
+                    }
+                }
+            }
+        }
+
         /*
         PullDownMenu {
             MenuItem {
@@ -70,7 +86,6 @@ Page {
 
         Row {
             id: ambienceView
-            property var ambiences: ListModel {}
             property int ambienceCount: Data.filteredCount();
             height: parent.height - Theme.paddingLarge
             anchors.top: header.bottom
@@ -78,17 +93,17 @@ Page {
             spacing: Theme.paddingMedium
 
             Repeater {
-                model: ambienceView.ambiences
+                model: rootWindow.ambiences
                 delegate: Item {
                     id: ambienceItem
                     property bool loading: true
-                    property bool active: ambienceView.ambiences.get(index).activated
-                    property string fileName: ambienceView.ambiences.get(index).fileName
+                    property bool active: rootWindow.ambiences.get(index).activated
+                    property string fileName: rootWindow.ambiences.get(index).fileName
 
                     Component.onCompleted: {
                         if (index >= 0 && index < flickable.preloadAmount)
                         {
-                            ambienceView.ambiences.get(index).activated = true;
+                            rootWindow.ambiences.get(index).activated = true;
                         }
                     }
 
@@ -105,7 +120,7 @@ Page {
                             else
                             {
                                 ambienceMgr.saveThumbnailSucceeded.connect(thumbnailReceived);
-                                ambienceMgr.saveThumbnail(ambienceView.ambiences.get(index).fullUri, fileName);
+                                ambienceMgr.saveThumbnail(rootWindow.ambiences.get(index).fullUri, fileName);
                             }
                         }
                     }
@@ -137,7 +152,7 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push("AmbienceDetailPage.qml", { "url" : ambienceView.ambiences.get(index).fullUri, "name" : fileName })
+                            pageStack.push("AmbienceDetailPage.qml", { "url" : rootWindow.ambiences.get(index).fullUri, "name" : fileName })
                         }
                     }
                 }
@@ -151,6 +166,7 @@ Page {
                 return;
             }
             currentIndex = curIndex;
+            rootWindow.ambiences.index = currentIndex
             var nextToActivate = curIndex + loadMoreThreshold;
             console.debug("next to activate: " + nextToActivate)
             console.debug("amb count: " + Data.filteredCount())
@@ -161,7 +177,7 @@ Page {
             for (var i = lastActivated + 1; i <= nextToActivate; i++)
             {
                 console.debug("activating: " + i);
-                ambienceView.ambiences.get(i).activated = true;
+                rootWindow.ambiences.get(i).activated = true;
             }
             lastActivated = nextToActivate;
         }
