@@ -17,12 +17,12 @@
 <context>
     <name>BrowseAmbienceListPage</name>
     <message>
-        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="38"/>
+        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Found ambiences</source>
         <translation>Found ambiences</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="38"/>
+        <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Ambiences for &apos;%1&apos;</source>
         <translation>Ambiences for &apos;%1&apos;</translation>
     </message>
@@ -38,6 +38,11 @@
         <location filename="../qml/pages/MainPage.qml" line="54"/>
         <source>Tags</source>
         <translation>Tags</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="71"/>
+        <source>Loading</source>
+        <translation>Loading</translation>
     </message>
 </context>
 </TS>
