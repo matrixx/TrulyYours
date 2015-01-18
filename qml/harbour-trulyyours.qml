@@ -34,8 +34,13 @@ import "pages"
 
 ApplicationWindow
 {
+    id: rootWindow
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    property var ambiences: ListModel {
+        property int index: -1
+    }
 }
 
 

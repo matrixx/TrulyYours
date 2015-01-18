@@ -3,7 +3,6 @@
 var ambiences = []
 var tags = []
 var tagCounts = []
-var maxTagsCount = 1;
 var filteredCnt = 0;
 
 function fetchAmbiences(tagMgr)
@@ -89,10 +88,6 @@ function saveTags(tagString)
         if (index > -1)
         {
             tagCounts[index] += 1;
-            if (tagCounts[index] > maxTagsCount)
-            {
-                maxTagsCount = tagCounts[index];
-            }
         }
         else
         {
@@ -113,9 +108,4 @@ function hasTag(tag, tagString)
         }
     }
     return false;
-}
-
-function getTagMaxCount()
-{
-    return maxTagsCount;
 }

@@ -41,7 +41,7 @@ void TagManager::sortAndSaveTags(const QVariantList &names, const QVariantList &
     emit tagsAvailable();
 }
 
-QVariantList TagManager::getTags()
+QVariantList TagManager::getTags() const
 {
     QVariantList variantlist;
     foreach(QString key, mSortedTags.keys())
@@ -51,7 +51,7 @@ QVariantList TagManager::getTags()
     return variantlist;
 }
 
-QVariantList TagManager::getTagAmounts()
+QVariantList TagManager::getTagAmounts() const
 {
     QVariantList variantlist;
     foreach(int value, mSortedTags.values())
@@ -59,4 +59,15 @@ QVariantList TagManager::getTagAmounts()
         variantlist << value;
     }
     return variantlist;
+}
+
+int TagManager::getMaxTagAmount() const
+{
+    int max = 0;
+    foreach(int value, mSortedTags.values())
+    {
+        if (value > max)
+            max = value;
+    }
+    return max;
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="en">
 <context>
     <name>AmbienceDetailPage</name>
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="48"/>
         <source>Save and create ambience</source>
-        <translation type="unfinished"></translation>
+        <translation>Save and create ambience</translation>
     </message>
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="57"/>
         <source>Save to gallery</source>
-        <translation type="unfinished"></translation>
+        <translation>Save to gallery</translation>
     </message>
 </context>
 <context>
@@ -19,12 +19,12 @@
     <message>
         <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Found ambiences</source>
-        <translation type="unfinished"></translation>
+        <translation>Found ambiences</translation>
     </message>
     <message>
         <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Ambiences for &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambiences for &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -32,17 +32,17 @@
     <message>
         <location filename="../qml/pages/MainPage.qml" line="45"/>
         <source>Show all ambiences</source>
-        <translation type="unfinished"></translation>
+        <translation>Show all ambiences</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="54"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="71"/>
         <source>Loading</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading</translation>
     </message>
 </context>
 </TS>

@@ -32,21 +32,54 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
+    Column {
+        visible: previewImage.source == ""
         anchors.centerIn: parent
-        text: "My Cover"
+        Image {
+            source: Qt.resolvedUrl("/usr/share/icons/hicolor/86x86/apps/"
+                                   + "harbour-trulyyours.png")
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Truly Yours"
+        }
+    }
+
+    Image {
+        id: previewImage
+        anchors.centerIn: parent
+        width: height * (250 / 740)
+        height: parent.height
+        source: ""
+        sourceSize.width: width
+        sourceSize.height: height
     }
 
     CoverActionList {
         id: coverAction
+        enabled: rootWindow.ambiences.count > 0 && rootWindow.ambiences.index < rootWindow.ambiences.count - 1
 
         CoverAction {
             iconSource: "image://theme/icon-cover-next"
+            onTriggered: rootWindow.ambiences.index++
         }
+    }
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+    Connections {
+        target: rootWindow.ambiences
+        onIndexChanged: {
+            var item = rootWindow.ambiences.get(rootWindow.ambiences.index)
+            //if (ambienceMgr.hasThumbnail(item.fileName))
+            //{
+                previewImage.source = ambienceMgr.thumbnail(item.fileName)
+            //}
+        }
+        onCountChanged: {
+            if (rootWindow.ambiences.count > 0 && rootWindow.ambiences.index < 0)
+            {
+                rootWindow.ambiences.index = 0
+            }
         }
     }
 }

@@ -47,10 +47,9 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QSharedPointer<QQuickView> view(SailfishApp::createView());
     QTranslator translator;
-    translator.load("translations_" + QLocale::system().name(),
-                    "/usr/share/harbour-trulyyours/i18n");
-    app->installTranslator(&translator);
-
+    if (translator.load("harbour-trulyyours-" + QLocale::system().name(),
+                        SailfishApp::pathTo("translations").path()))
+        app->installTranslator(&translator);
 
     AmbienceManager mgr;
     TagManager tagMgr;

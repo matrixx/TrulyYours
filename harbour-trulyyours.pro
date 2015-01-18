@@ -34,6 +34,8 @@ INSTALLS += js
 
 # to disable building translations every time, comment out the
 # following CONFIG line
-#CONFIG += sailfishapp_i18n
-#TRANSLATIONS += translations/$${TARGET}-de.ts
+CONFIG += sailfishapp_i18n
+TRANSLATIONS += \
+    translations/$${TARGET}-de.ts \
+    translations/$${TARGET}-en.ts
 

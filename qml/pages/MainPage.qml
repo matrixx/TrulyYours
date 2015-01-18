@@ -66,12 +66,17 @@ Page {
             anchors.top: header.bottom
             anchors.topMargin: Theme.paddingLarge
         }
+        ViewPlaceholder {
+            enabled: tagCloud.maxTagCount == 0
+            text: qsTr("Loading")
+        }
 
         function setTags()
         {
-            tagCloud.maxTagCount = Data.getTagMaxCount();
-            tagCloud.tags = tagMgr.getTags();
+            // set the tags as last since the TagCloud will update internally afterwards
+            tagCloud.maxTagCount = tagMgr.getMaxTagAmount();
             tagCloud.tagAmounts = tagMgr.getTagAmounts();
+            tagCloud.tags = tagMgr.getTags();
         }
 
         function openFilteredAmbienceList(filter)
