@@ -36,6 +36,8 @@ INSTALLS += js
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += \
+    translations/$${TARGET}-fi.ts \
+    translations/$${TARGET}-ru.ts \
     translations/$${TARGET}-de.ts \
     translations/$${TARGET}-en.ts
 
