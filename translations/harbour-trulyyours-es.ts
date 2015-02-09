@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="es">
 <context>
     <name>AmbienceDetailPage</name>
     <message>
@@ -11,12 +11,12 @@
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="56"/>
         <source>Save and create ambience</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar y crear ambiente</translation>
     </message>
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="64"/>
         <source>Save to gallery</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar en la galería</translation>
     </message>
 </context>
 <context>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Found ambiences</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambientes encontrados</translation>
     </message>
     <message>
         <location filename="../qml/pages/BrowseAmbienceListPage.qml" line="39"/>
         <source>Ambiences for &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambientes de &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../qml/pages/CommentsPage.qml" line="64"/>
         <source>Loading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cargando</translation>
     </message>
     <message>
         <location filename="../qml/pages/CommentsPage.qml" line="64"/>
@@ -55,17 +55,17 @@
     <message>
         <location filename="../qml/pages/MainPage.qml" line="45"/>
         <source>Show all ambiences</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar todos loa ambientes</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="54"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="71"/>
         <source>Loading</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando</translation>
     </message>
 </context>
 </TS>

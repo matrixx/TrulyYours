@@ -26,7 +26,8 @@ OTHER_FILES += rpm/$${TARGET}.spec \
     qml/pages/BrowseAmbienceListPage.qml \
     qml/pages/Data.js \
     qml/pages/MainPage.qml \
-    qml/pages/Components/QuickTagCloud.qml
+    qml/pages/Components/QuickTagCloud.qml \
+    qml/pages/CommentsPage.qml
 
 js.path = /usr/share/$${TARGET}/qml/pages
 js.files = Data.js
@@ -39,5 +40,6 @@ TRANSLATIONS += \
     translations/$${TARGET}-fi.ts \
     translations/$${TARGET}-ru.ts \
     translations/$${TARGET}-de.ts \
-    translations/$${TARGET}-en.ts
+    translations/$${TARGET}-en.ts \
+    translations/$${TARGET}-es.ts
 

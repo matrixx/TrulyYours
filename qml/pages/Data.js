@@ -84,7 +84,7 @@ function saveTags(tagString)
             break;
         }
 
-        var index = tags.indexOf(tagList[i]);
+        var index = tags.indexOf(tagList[i].toLowerCase());
         if (index > -1)
         {
             tagCounts[index] += 1;
@@ -108,4 +108,26 @@ function hasTag(tag, tagString)
         }
     }
     return false;
+}
+
+function fetchComments(model, id, loading)
+{
+    model.clear();
+    loading = true;
+    var xhr = new XMLHttpRequest
+    var query = "http://www.jollawalls.com/api/comments/" + id;
+    xhr.open("GET", query);
+    xhr.onreadystatechange = function()
+    {
+        if (xhr.readyState === XMLHttpRequest.DONE)
+        {
+            var results = JSON.parse(xhr.responseText)
+            for (var i in results)
+            {
+                model.append(results[i]);
+            }
+            loading = false;
+        }
+    }
+    xhr.send();
 }

@@ -30,6 +30,7 @@ Page {
     id: page
     property string url: ""
     property string name: ""
+    property string mediaId: ""
     property bool savingInProgress: false
     Component.onCompleted: {
         ambienceMgr.saveFullImageSucceeded.connect(page.setSource)
@@ -45,6 +46,13 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("Show comments")
+                visible: fullImage.source != "" && !savingInProgress
+                onClicked: {
+                    pageStack.push("CommentsPage.qml", { "mediaId" : mediaId })
+                }
+            }
+            MenuItem {
                 text: qsTr("Save and create ambience")
                 visible: fullImage.source != "" && !savingInProgress
                 onClicked: {
@@ -52,7 +60,6 @@ Page {
                     ambienceMgr.saveImageToGalleryAndApplyAmbience(name)
                 }
             }
-
             MenuItem {
                 text: qsTr("Save to gallery")
                 visible: fullImage.source != "" && !savingInProgress

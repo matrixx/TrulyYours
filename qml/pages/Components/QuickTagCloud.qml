@@ -53,15 +53,15 @@ Flow {
         function fontSize(index)
         {
             var count = tagCloud.tagAmounts[index];
-            if (count >= (tagCloud.maxTagCount / 4 * 3))
+            if (count >= (tagCloud.maxTagCount / 3 * 2))
             {
                 return Theme.fontSizeExtraLarge;
             }
-            else if (count >= (tagCloud.maxTagCount / 4 * 2))
+            else if (count >= (tagCloud.maxTagCount / 3))
             {
                 return Theme.fontSizeLarge;
             }
-            else if (count >= (tagCloud.maxTagCount / 4))
+            else if (count >= (tagCloud.maxTagCount / 6))
             {
                 return Theme.fontSizeMedium;
             }

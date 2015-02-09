@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     if (translator.load("harbour-trulyyours-" + QLocale::system().name(),
                         SailfishApp::pathTo("translations").path()))
         app->installTranslator(&translator);
-
+    qDebug() << "locale:" << QLocale::system().name();
     AmbienceManager mgr;
     TagManager tagMgr;
     view->rootContext()->setContextProperty("ambienceMgr", &mgr);

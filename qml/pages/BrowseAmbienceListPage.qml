@@ -152,7 +152,7 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            pageStack.push("AmbienceDetailPage.qml", { "url" : rootWindow.ambiences.get(index).fullUri, "name" : fileName })
+                            pageStack.push("AmbienceDetailPage.qml", { "url" : rootWindow.ambiences.get(index).fullUri, "name" : fileName, "mediaId" : rootWindow.ambiences.get(index).id })
                         }
                     }
                 }
