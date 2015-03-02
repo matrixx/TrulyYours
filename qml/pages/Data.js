@@ -5,11 +5,13 @@ var tags = []
 var tagCounts = []
 var filteredCnt = 0;
 
-function fetchAmbiences(tagMgr)
+function fetchAmbiences(tagMgr, authkey)
 {
     var xhr = new XMLHttpRequest
     var query = "http://www.jollawalls.com/api/media"
     xhr.open("GET", query);
+    xhr.setRequestHeader('auth_key', authkey);
+
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === XMLHttpRequest.DONE)
@@ -110,13 +112,15 @@ function hasTag(tag, tagString)
     return false;
 }
 
-function fetchComments(model, id, loading)
+function fetchComments(model, id, loading, authkey)
 {
     model.clear();
     loading = true;
     var xhr = new XMLHttpRequest
     var query = "http://www.jollawalls.com/api/comments/" + id;
     xhr.open("GET", query);
+    xhr.setRequestHeader('auth_key', authkey);
+
     xhr.onreadystatechange = function()
     {
         if (xhr.readyState === XMLHttpRequest.DONE)

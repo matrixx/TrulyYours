@@ -37,7 +37,7 @@ Page {
         Component.onCompleted: {
             tagMgr.tagsAvailable.connect(setTags);
             tagCloud.tagClicked.connect(openFilteredAmbienceList);
-            Data.fetchAmbiences(tagMgr);
+            Data.fetchAmbiences(tagMgr, preferences.getAuthKey());
         }
 
         PullDownMenu {

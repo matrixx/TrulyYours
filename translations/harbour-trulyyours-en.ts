@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="49"/>
         <source>Show comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Show comments</translation>
     </message>
     <message>
         <location filename="../qml/pages/AmbienceDetailPage.qml" line="56"/>
@@ -37,17 +37,17 @@
     <message>
         <location filename="../qml/pages/CommentsPage.qml" line="44"/>
         <source>Comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Comments</translation>
     </message>
     <message>
         <location filename="../qml/pages/CommentsPage.qml" line="64"/>
         <source>Loading</source>
-        <translation type="unfinished">Loading</translation>
+        <translation>Loading</translation>
     </message>
     <message>
         <location filename="../qml/pages/CommentsPage.qml" line="64"/>
         <source>This ambience has no comments</source>
-        <translation type="unfinished"></translation>
+        <translation>This ambience has no comments</translation>
     </message>
 </context>
 <context>

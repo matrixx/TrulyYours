@@ -9,12 +9,15 @@ system(qdbusxml2cpp -p src/ambienced.h:src/ambienced.cpp src/ambienced.xml)
 HEADERS += \
     src/ambiencemanager.h \
     src/tagmanager.h \
-    src/ambienced.h
+    src/ambienced.h \
+    src/preferences.h \
+    src/authkey.h
 
 SOURCES += src/harbour-trulyyours.cpp \
     src/ambiencemanager.cpp \
     src/tagmanager.cpp \
-    src/ambienced.cpp
+    src/ambienced.cpp \
+    src/preferences.cpp
 
 OTHER_FILES += rpm/$${TARGET}.spec \
     rpm/$${TARGET}.yaml \
@@ -41,5 +44,6 @@ TRANSLATIONS += \
     translations/$${TARGET}-ru.ts \
     translations/$${TARGET}-de.ts \
     translations/$${TARGET}-en.ts \
-    translations/$${TARGET}-es.ts
+    translations/$${TARGET}-es.ts \
+    translations/$${TARGET}-nl.ts
 

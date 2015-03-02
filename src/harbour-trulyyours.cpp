@@ -41,6 +41,7 @@
 #include <QQmlContext>
 #include "ambiencemanager.h"
 #include "tagmanager.h"
+#include "preferences.h"
 
 int main(int argc, char *argv[])
 {
@@ -53,8 +54,10 @@ int main(int argc, char *argv[])
     qDebug() << "locale:" << QLocale::system().name();
     AmbienceManager mgr;
     TagManager tagMgr;
+    Preferences preferences;
     view->rootContext()->setContextProperty("ambienceMgr", &mgr);
     view->rootContext()->setContextProperty("tagMgr", &tagMgr);
+    view->rootContext()->setContextProperty("preferences", &preferences);
     view->setSource(QUrl(SailfishApp::pathTo("qml/harbour-trulyyours.qml")));
 
     view->show();

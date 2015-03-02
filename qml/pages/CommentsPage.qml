@@ -33,7 +33,7 @@ Page {
     property bool loading: false
 
     Component.onCompleted: {
-        Data.fetchComments(comments, mediaId, loading);
+        Data.fetchComments(comments, mediaId, loading, preferences.getAuthKey());
     }
     SilicaListView {
         id: ambienceComments
