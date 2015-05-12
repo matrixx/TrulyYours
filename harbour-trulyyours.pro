@@ -45,5 +45,6 @@ TRANSLATIONS += \
     translations/$${TARGET}-de.ts \
     translations/$${TARGET}-en.ts \
     translations/$${TARGET}-es.ts \
-    translations/$${TARGET}-nl.ts
+    translations/$${TARGET}-nl.ts \
+    translations/$${TARGET}-zh_CN.ts
 
